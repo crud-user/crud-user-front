@@ -1,0 +1,83 @@
+<div class="flex justify-center items-center h-screen">
+    <div class="container max-w-md mx-auto bg-white rounded-lg shadow-md p-8 border-2 ">
+        <h2 class="text-2xl font-bold text-center mb-6">User Registration Form</h2>
+        <form [formGroup] = "userRegister"  action="your-backend-endpoint" method="">
+            <div class="mb-4">
+                <label for="name" class="block font-semibold text-sm mb-1">Name:</label>
+                <input type="text" id="name" name="name" required formControlName="name"
+                       class="w-full px-3 py-1 border border-gray-300 rounded-md">
+                       @if (userRegister.get('name')?.hasError('required') && userRegister.get('name')?.touched) {
+                        <div class="font-sans text-red-600 text-xs">Name is required</div>
+                       }
+            </div>
+            <div class="mb-4">
+                <label for="userName" class="block font-semibold text-sm mb-1">Username:</label>
+                <input type="text" id="userName" name="userName" required formControlName="userName"
+                       class="w-full px-3   py-2 border border-gray-300 rounded-md">
+                       @if (userRegister.get('userName')?.hasError('required') && userRegister.get('userName')?.touched) {
+                        <div class="font-sans text-red-600 text-xs">Username is required</div>
+                       }
+            </div>
+            <div class="mb-4">
+                <label for="email" class="block font-semibold text-sm mb-1">Email:</label>
+                <input type="email" id="email" name="email" required formControlName="email"
+                       class="w-full px-3  py-2 border border-gray-300 rounded-md">
+                       @if (userRegister.get('email')?.hasError('required') && userRegister.get('email')?.touched) {
+                        <div class="font-sans text-red-600 text-xs">email is required</div>
+                       }
+            </div>
+            <div class="mb-4">
+                <label for="dateNaissance" class="block font-semibold text-sm mb-1">Date of Birth:</label>
+                <input type="date" id="dateNaissance" name="dateNaissance" required formControlName="dateNaissance"
+                       class="w-full px-3   py-2 border border-gray-300 rounded-md">
+                       @if (userRegister.get('dateNaissance')?.hasError('required') && userRegister.get('dateNaissance')?.touched) {
+                        <div  class="font-sans text-red-600 text-xs">dateNaissance is required</div>
+                       }
+            </div>
+            <div class="flex flex-row  ">
+                <div class="mb-4 w-full sm:w-fit m-2">
+                    <label for="password" class="block font-semibold text-sm mb-1">Password:</label>
+                    <input type="password" id="password" name="password" required formControlName="password"
+                           class="w-full px-3  py-2 border border-gray-300 rounded-md">
+                           @if (userRegister.get('password')?.hasError('required') && userRegister.get('password')?.touched) {
+                            <div class="font-sans text-red-600 text-xs">password is required</div>
+                           }
+                </div>
+                <div class="mb-4 w-full sm:w-fit m-2">
+                    <label for="confirmPassword" class="block font-semibold text-sm mb-1">Confirm Password:</label>
+                    <input type="password" id="confirmPassword" name="confirmPassword" required formControlName="confirmPassword"
+                           class="w-full px-3  py-2 border border-gray-300 rounded-md">
+                           @if (
+                           userRegister.get('confirmPassword')?.touched &&
+                           userRegister.get('confirmPassword')?.hasError('required')) {
+                            <div class="font-sans text-red-600 text-xs">Confirm Password is required</div>
+                           }
+                           @else if( 
+                            userRegister.hasError("notMatch")) {
+                             <div class="font-sans text-red-600 text-xs">Password and Confirm Password must match</div>
+                            }
+                            
+                </div>
+                
+            </div>
+            <div class="mb-4">
+                <label for="role" class="block font-semibold text-sm mb-1">Role:</label>
+                <select id="role" name="role" required formControlName="role"
+                        class="w-full px-3 py-2 border border-gray-300 rounded-md">
+                    <option value="USER">User</option>
+                    <option value="ADMIN">Admin</option>
+                </select>
+                @if (userRegister.get('role')?.hasError('required') && userRegister.get('role')?.touched) {
+                    <div class="font-sans text-red-600 text-xs">role is required</div>
+                   }
+            </div>
+            <div class="flex justify-evenly items-center">
+                <input type="submit" value="Register"   (click)="register()"
+                   class="w-fit bg-red-400 hover:bg-blue-800 text-white font-medium rounded-md px-6 py-3 cursor-pointer">
+    
+                   <p> Already have account? <a href="signin" class="font-semibold text-blue-400 text-sm" > Sign In</a></p>
+                      
+            </div>
+        </form> 
+    </div>
+</div>

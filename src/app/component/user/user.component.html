@@ -1,0 +1,95 @@
+  <div class="flex justify-end items-center mr-28">
+    <!-- <nz-switch class="ml-8" [(ngModel)]="switchValue" (click)="logout()" 
+    ></nz-switch> -->
+    <button nz-button nzType="primary" (click)="logout()" >
+      <span class="text-slate-950 font-semibold">Log Out</span>
+      <span nz-icon nzType="poweroff"></span>
+    </button>
+    
+    <!-- <nz-switch [ngModel]="switchValue" [nzDisabled]="isDisabled"></nz-switch> -->
+  </div>
+  
+  <div class="flex justify-center m-6 flex-row w-auto gap-2">
+    <!-- <nz-input-group class="w-96" [nzSuffix]="suffixTemplateInfo" [nzPrefix]="prefixTemplateUser"> -->
+      <input type="text" class="w-96" [(ngModel)]="userNameFilter" nz-input placeholder="Filter by username" />
+      <input type="text" class="w-96" [(ngModel)]="emailFilter" nz-input placeholder="Filter by email" />
+      <input type="date" class="w-96" [(ngModel)]="dateFilter" nz-input placeholder="Filter by date" />
+      <button nz-button nzType="primary" class="font-semibold" (click)="filterByCriteria()">Search</button>
+    <!-- </nz-input-group>
+    <ng-template #prefixTemplateUser><span nz-icon nzType="user"></span></ng-template>
+    <ng-template #suffixTemplateInfo>
+      <span nz-icon nz-tooltip nzTooltipTitle="Extra information" nzType="info-circle"></span>
+    </ng-template> -->
+  </div>
+  
+  <div class="flex justify-between items-center mx-11 p-7 m-4 bg-gray-200 rounded-lg ">
+    <h4 class="font-bold text-2xl"> Hi, {{username}}</h4>
+    <nz-input-group class="w-96">
+      <input type="text" [(ngModel)]="name" nz-input (keypress)="handleFilterByName()"  placeholder="filter by name" />
+    </nz-input-group>
+    <button type="button" (click)="openModel()"
+      class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none font-semibold text-base rounded-full px-10 py-5 text-center mb-2 ">Add
+      User
+    </button>
+  </div>
+  <div class="relative overflow-x-auto shadow-md sm:rounded-lg mx-11 ">
+    <div
+        class="p-5 text-xl text-left font-bold rtl:text-right text-gray-900 bg-white ">
+        Manage Users
+      </div>
+    <nz-table #tableData [nzData]="users" class=" w-full text-sm text-left rtl:text-right text-gray-500 ">
+      <thead class="text-xs text-gray-700 uppercase bg-gray-50  ">
+        <tr>
+          <th scope="col" class="px-6 py-3">
+            name
+          </th>
+          <th scope="col" class="px-6 py-3">
+            userName
+          </th>
+          <th scope="col" class="px-6 py-3">
+            email
+          </th>
+          <th scope="col" class="px-6 py-3">
+            dateNaissance
+          </th>
+          <th scope="col" class="px-6 py-3">
+            role
+          </th>
+          <th scope="col" class="px-6 py-3">
+            <span class="sr-only">Edit</span>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (item of tableData.data; track $index) {
+        <tr class="bg-white border-b  ">
+          <th scope="row" class="px-6 py-4 border-b font-medium text-gray-900 whitespace-nowrap ">
+            {{item.name}}
+          </th>
+          <td class="px-6 py-4">
+            {{item.userName}}
+          </td>
+          <td class="px-6 py-4">
+            {{item.email}}
+          </td>
+          <td class="px-6 py-4">
+            {{item.dateNaissance}} 
+          </td>
+          <td class="px-6 py-4">
+            {{item.role}} 
+          </td>
+          <td class="px-6 py-4 text-right">
+            <button type="button" (click)="editeUser(item)"
+              class="font-medium text-blue-600  hover:underline mr-4">Edit</button>
+            <button type="button" (click)="deleteUser(item.id!)"
+              class="font-medium text-red-600  hover:underline">Delete</button>
+          </td>
+        </tr>
+        }
+      </tbody>
+    </nz-table>
+  </div>
+
+  <app-model-form   [isOpen]="isModelOpen" >
+    <app-first-form-user (onCloseModel)="closeModel()" [data]="user" ></app-first-form-user>
+  </app-model-form>
