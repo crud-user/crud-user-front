@@ -36,4 +36,26 @@ export class UserService {
 
       return this.http.post(`${this.apiUrl}/list-by-criteria`,data)
   }
+
+  getAllUsersByCriteriaAndPage(userNameFilter: string,
+     emailFilter: string, 
+     dateFilter: string, 
+     pageIndex :number,
+     pageSize :number,
+     columnToSort: string
+     ) : any{
+    const data = {
+        userName: userNameFilter,
+        email: emailFilter,
+        dateNaissance: dateFilter,
+        pageRequestDto: {
+          pageNo: pageIndex -1,
+          pageSize: pageSize,
+          sort: "ASC",
+          sortByColumn: "id"
+        }
+      }
+
+      return this.http.post(`${this.apiUrl}/list-by-page`,data)
+  }
 }

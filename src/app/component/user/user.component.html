@@ -1,9 +1,9 @@
   <div class="flex justify-end items-center mr-28">
     <!-- <nz-switch class="ml-8" [(ngModel)]="switchValue" (click)="logout()" 
     ></nz-switch> -->
-    <button nz-button nzType="primary" (click)="logout()" >
+    <button nz-button nzType="primary" class="flex items-center" (click)="logout()" >
       <span class="text-slate-950 font-semibold">Log Out</span>
-      <span nz-icon nzType="poweroff"></span>
+      <span nz-icon nzType="logout" class="font-semibold " nzTheme="outline"></span>
     </button>
     
     <!-- <nz-switch [ngModel]="switchValue" [nzDisabled]="isDisabled"></nz-switch> -->
@@ -14,7 +14,9 @@
       <input type="text" class="w-96" [(ngModel)]="userNameFilter" nz-input placeholder="Filter by username" />
       <input type="text" class="w-96" [(ngModel)]="emailFilter" nz-input placeholder="Filter by email" />
       <input type="date" class="w-96" [(ngModel)]="dateFilter" nz-input placeholder="Filter by date" />
-      <button nz-button nzType="primary" class="font-semibold" (click)="filterByCriteria()">Search</button>
+      <!-- <button nz-button nzType="primary" class="font-semibold" (click)="filterByCriteria()">Search</button> -->
+      <button nz-button nzType="primary" class="font-semibold" (click)="getAllUsersByCriteriaAndPage()">Search</button>
+      <button nz-button nzType="default" class="font-semibold" (click)="resetFilter()">reset</button>
     <!-- </nz-input-group>
     <ng-template #prefixTemplateUser><span nz-icon nzType="user"></span></ng-template>
     <ng-template #suffixTemplateInfo>
@@ -37,7 +39,17 @@
         class="p-5 text-xl text-left font-bold rtl:text-right text-gray-900 bg-white ">
         Manage Users
       </div>
-    <nz-table #tableData [nzData]="users" class=" w-full text-sm text-left rtl:text-right text-gray-500 ">
+    <nz-table 
+      #tableData 
+      nzShowSizeChanger
+      [nzPageSizeOptions]="[2,4,6,10]"
+      [nzFrontPagination]="false"
+      [nzTotal]="total"
+      [nzPageSize]="pageSize"
+      [nzPageIndex]="pageIndex"
+      (nzQueryParams)="onQueryParamsChange($event)"
+      [nzData]="users" 
+     class=" w-full text-sm text-left rtl:text-right text-gray-500 ">
       <thead class="text-xs text-gray-700 uppercase bg-gray-50  ">
         <tr>
           <th scope="col" class="px-6 py-3">
