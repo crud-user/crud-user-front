@@ -42,7 +42,8 @@ export class UserService {
      dateFilter: string, 
      pageIndex :number,
      pageSize :number,
-     columnToSort: string
+     columnToSort: string,
+     SortOrder: string
      ) : any{
     const data = {
         userName: userNameFilter,
@@ -51,11 +52,11 @@ export class UserService {
         pageRequestDto: {
           pageNo: pageIndex -1,
           pageSize: pageSize,
-          sort: "ASC",
-          sortByColumn: "id"
+          sort:SortOrder,
+          sortByColumn: columnToSort
         }
       }
-
+      
       return this.http.post(`${this.apiUrl}/list-by-page`,data)
   }
 }

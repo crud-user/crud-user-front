@@ -3,7 +3,7 @@ import { UserService } from '../../service/userService/user.service';
 import { ModelFormComponent } from "../model-form/model-form.component";
 import { FirstFormUserComponent } from "../first-form-user/first-form-user.component";
 import { ToastrService } from 'ngx-toastr';
-import { NzTableModule, NzTableQueryParams } from 'ng-zorro-antd/table';
+import { NzTableModule, NzTableQueryParams, NzTableSortOrder } from 'ng-zorro-antd/table';
 import { NzSwitchModule } from 'ng-zorro-antd/switch';
 import { Route, Router } from '@angular/router';
 import { NzInputModule } from 'ng-zorro-antd/input';
@@ -21,9 +21,12 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
 export class UserComponent implements OnInit {
 
 
+
   total = 1;
   pageSize = 2;
   pageIndex = 1;
+  sortField :any
+  sortOrder :any 
 //for filter
   userNameFilter : string = ''
   emailFilter : string = ''
@@ -60,7 +63,7 @@ export class UserComponent implements OnInit {
   deleteUser(id: Number){    
     this.userService.deleteUser(id).subscribe({
       next: (resp: any)=>{
-        this.getAllUsers()
+        this.getAllUsersByCriteriaAndPage()
         this.toastService.success('User deleted succefully');
       }
     })
@@ -76,7 +79,8 @@ export class UserComponent implements OnInit {
   closeModel(){
     console.log("event");
     this.isModelOpen = false;
-    this.getAllUsers()
+    // this.getAllUsers()
+    this.getAllUsersByCriteriaAndPage()
   }
   
   logout() {
@@ -107,7 +111,14 @@ export class UserComponent implements OnInit {
 
  getAllUsersByCriteriaAndPage() {
   // if(!(this.userNameFilter === '') || !(this.emailFilter === '')|| !(this.dateFilter === '') ){
-    this.userService.getAllUsersByCriteriaAndPage(this.userNameFilter,this.emailFilter,this.dateFilter, this.pageIndex,this.pageSize,"name").subscribe({
+    this.userService.getAllUsersByCriteriaAndPage(this.userNameFilter,
+      this.emailFilter,
+      this.dateFilter, 
+      this.pageIndex,
+      this.pageSize,
+      this.sortField,
+      this.sortOrder
+      ).subscribe({
       next: (res:any)=> {
       this.total = res.totalElements; 
         this.users = res?.content
@@ -122,17 +133,21 @@ export class UserComponent implements OnInit {
   this.userNameFilter = ''
   this.emailFilter = ''
   this.dateFilter = ''
-  this.getAllUsers()
+  // this.getAllUsers()
+  this.getAllUsersByCriteriaAndPage()
   }
 
   onQueryParamsChange(params: NzTableQueryParams) {
-    console.log("on query params change::",params);
+    // console.log("on query params change::",params.sort);
     const { pageSize, pageIndex, sort, filter } = params;
     const currentSort = sort.find(item => item.value !== null);
     const sortField = (currentSort && currentSort.key) || null;
     const sortOrder = (currentSort && currentSort.value) || null;
     this.pageIndex = pageIndex
     this.pageSize = pageSize
+    this.sortField = sortField 
+    this.sortOrder = (sortOrder === "ascend" && sortField !== null) ?"ASC": "DESC"
     this.getAllUsersByCriteriaAndPage();
     }
+
 }

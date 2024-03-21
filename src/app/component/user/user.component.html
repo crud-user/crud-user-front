@@ -45,14 +45,16 @@
       [nzPageSizeOptions]="[2,4,6,10]"
       [nzFrontPagination]="false"
       [nzTotal]="total"
+      [nzShowQuickJumper]="true"
       [nzPageSize]="pageSize"
+      [nzHideOnSinglePage]="true"
       [nzPageIndex]="pageIndex"
       (nzQueryParams)="onQueryParamsChange($event)"
       [nzData]="users" 
      class=" w-full text-sm text-left rtl:text-right text-gray-500 ">
       <thead class="text-xs text-gray-700 uppercase bg-gray-50  ">
         <tr>
-          <th scope="col" class="px-6 py-3">
+          <th [nzShowFilter]="true" nzColumnKey="name" [nzSortFn]="true" scope="col" class="px-6 py-3">
             name
           </th>
           <th scope="col" class="px-6 py-3">
@@ -61,10 +63,10 @@
           <th scope="col" class="px-6 py-3">
             email
           </th>
-          <th scope="col" class="px-6 py-3">
+          <th nzColumnKey="dateNaissance" [nzSortFn]="true" scope="col" class="px-6 py-3">
             dateNaissance
           </th>
-          <th scope="col" class="px-6 py-3">
+          <th scope="col"class="px-6 py-3">
             role
           </th>
           <th scope="col" class="px-6 py-3">
